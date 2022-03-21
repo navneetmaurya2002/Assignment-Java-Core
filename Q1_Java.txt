@@ -1,0 +1,481 @@
+Question 1:
+
+
+Q1_input.java
+
+
+
+package java_test;
+
+import java.util.Scanner;
+
+
+public class Q1_input {
+
+    private int accNO, accBal;   // account Number and account Balance
+    String name; // for name
+    int ch;  // for choice
+    int amount; // for amount
+    public static Scanner sc = new Scanner(System.in); // static declaration of the Scanner class
+    // setter and getter for private fields
+
+    public int getAccNO() {
+        return accNO;
+    }
+
+    public void setAccNO(int accNO) {
+        this.accNO = accNO;
+    }
+
+    public int getAccBal() {
+        return accBal;
+    }
+
+    public void setAccBal(int accBal) {
+        this.accBal = accBal;
+    }
+
+    // Method for Calculation
+    public void Calculation() {
+        int rep;
+        do {
+            
+            System.out.println("Choose the option to perform operation: \n 1.Debit Cash \n 2. Credit Cash \n 3.Check Balance");
+            ch = sc.nextInt();
+            System.out.print("Enter the Amount:");
+            amount = sc.nextInt();
+            switch (ch) {
+                case 1:
+                    accBal -= amount;
+                    break;
+                case 2:
+                    accBal+=amount;
+                    break;
+                case 3:
+                    System.out.print("Your Account Balance is :"+accBal);
+                    break;      
+            }
+            System.out.println("Do you want to process more Transaction: /n 1. Yes /n 2. No");
+            rep=sc.nextInt();
+        } while (rep==1);
+    }
+}
+
+
+---------------------------------------------------------------------------------------------------
+
+Main File
+
+Question.java
+
+
+package java_test;
+import java.util.Scanner;
+/**
+ *
+ * @author navneet
+ */
+public class Question1 {
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        Q1_input q1=new Q1_input();
+        System.out.print("Enter your Name:");
+        q1.name=sc.nextLine();
+        System.out.print("Enter your Account Number:");
+        int accNo=sc.nextInt();
+        q1.setAccNO(accNo);
+        System.out.print("Enter your Account Balance:");
+        int accBal=sc.nextInt();
+        q1.setAccBal(accBal);   
+        q1.Calculation();
+        System.out.println("Name:"+q1.name);
+        System.out.println("Account Number:"+q1.getAccNO());        
+        System.out.println("Account Balance:"+q1.getAccBal());
+
+        
+    }
+}
+
+--------------------------------------------------------------------------------------------------------------
+
+
+Question 2:
+
+
+package java_test;
+
+import java.util.Scanner;
+
+/**
+ *
+ * @author navneet
+ *
+ *
+ * Q2:WAP to accept the choice and do the following process using polymorphism
+ * 1:Leap year or not 2:Reverse 3:Pattern1= pascal's triangle and sandglass
+ * pattern
+ *
+ */
+// class for leap year
+class option1 {
+
+    public static Scanner sc = new Scanner(System.in);
+
+    public void process() {
+        System.out.print("Enter the year: ");
+        int year = sc.nextInt();
+        if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0) {
+            System.out.println("Leap Year");
+        }
+        else
+            System.out.println("Not a Leap Year");
+    }
+}
+// class for reverse number
+class option2 extends option1 {
+public void process()
+{
+    System.out.print("Enter the number to get its reverse:");
+    int num=sc.nextInt();
+    int reverse=0,remainder;
+    while(num!=0)
+    {
+        remainder=num%10;
+        reverse=reverse*10+remainder;
+        num/=10;
+    }
+    System.out.println("The reverse number is:"+reverse);
+}
+}
+
+class option3 extends option2 {
+@Override
+public void process()
+{
+   int rows,row,space,symbol;
+    System.out.print("Enter the number of rows:");
+    rows=sc.nextInt();
+    for(row=1; row<rows;row++)
+    {
+        for(space=row;space<=rows;space++)
+        {
+            System.out.print(" ");
+        }
+        for(symbol=1;symbol<=row;symbol++)
+        {
+            System.out.print("*");
+        }
+        System.out.println("");
+    }
+    
+    
+    // for lower part
+    
+    for(row=rows;row>=1;row--)
+    {
+        for(space=rows;space>=row;space--)
+        {
+            System.out.print(" ");
+        }
+        for(symbol=1;symbol<=row;symbol++)
+        {
+            System.out.print("*");
+        }
+        System.out.println("");
+    }
+}
+}
+class option4 extends option3 {
+@Override
+public void process()
+{
+    int rows, row, space, symbol;
+    System.out.print("Enter the number of rows:");
+    rows=sc.nextInt();
+    // for upper triangle
+    
+    for(row=rows;row>0;row--)
+    {
+        for(space=1;space<=rows-row;space++)
+        {
+            System.out.print(" ");
+        }
+        for(symbol=row;symbol>=1;symbol--)
+        {
+            System.out.print("* ");
+        }
+        System.out.println("");        
+    }
+    
+    // for lower triangle
+     
+    for(row=1;row<=rows;row++)
+    {
+        for(space=rows;space>row;space--)
+        {
+            System.out.print(" ");
+        }
+        for(symbol=1;symbol<=row;symbol++)
+        {
+            System.out.print("* ");
+        }
+        System.out.println("");
+    }
+}
+}
+
+public class Question2 extends option3 {
+
+    public static void main(String[] args) {
+        int option;
+        System.out.println("Choose the option to perform :\n 1. Leap year or Not "
+                + "\n 2. Reverse"
+                + "\n 3.Pascal's Triangle "
+                + "\n 4. Sandglass ");
+        option1 op1=new option1();
+        option2 op2=new option2();
+        option3 op3=new option3();
+        option4 op4=new option4();
+        option = sc.nextInt();
+        
+        switch (option) {
+            case 1:
+                op1.process();
+                break;
+            case 2:
+                op2.process();
+                break;
+            case 3:
+                op3.process();
+                break;
+            case 4:
+                op4.process();
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+
+------------------------------------------------------------------------------------------------------------
+
+
+Question 3:
+
+
+
+
+
+
+package java_test;
+import java.util.Scanner;
+/**
+ *
+ * @author navneet
+ */
+abstract class opt1{
+   abstract void fact();
+   abstract void isPrime();
+    }
+
+public class Question3 extends opt1 {
+    public static Scanner sc=new Scanner(System.in);
+    @Override
+    void fact()
+    {
+        int fact=1,num;
+        System.out.print("Enter the number to get factorial:");
+        num=sc.nextInt();
+        for(int i=1;i<=num;i++)
+        {
+            fact*=i;
+        }
+        System.out.println("The factorial of the number is:"+fact);
+    }
+    @Override
+    void isPrime()
+    {
+        int num;
+        boolean flag=true;
+        System.out.print("Enter the number :");
+        num=sc.nextInt();
+        for(int i=2;i<=num;i++)
+        {
+        if(num%i==0)
+        {
+            flag=false;
+        break;
+        }
+        }
+        if(flag==true)
+        {
+            System.out.println("Not Prime number");
+        }
+        else 
+            System.out.println("Prime number");
+    }
+    public static void main(String[] args) {
+        Question3 q3=new Question3();
+        System.out.println("Select the option to process: \n 1. Factorial \n 2. Prime Number");
+        int opt=sc.nextInt();
+        switch (opt) {
+            case 1:
+                q3.fact();
+                break;
+            case 2:
+                q3.isPrime();
+                break;
+            default:
+                System.out.println("The selected option is Wrong");
+                break;
+        }
+    }
+}
+
+
+---------------------------------------------------------------------------------------------------------------
+
+
+Question 4:
+
+
+
+package java_test;
+
+import java.util.Scanner;
+
+/**
+ *
+ * @author navneet
+ */
+class acceptArray {
+
+    public static Scanner sc = new Scanner(System.in);
+
+    public int[] Array() {
+        System.out.print("Enter the size of Array:");
+        int size = sc.nextInt();
+        int[] arr = new int[size];
+        System.out.println("Enter the elements in an array:");
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = sc.nextInt();
+        }
+        return arr;
+    }
+}
+
+class great_small extends acceptArray {
+
+    public void greatest() {
+        int[] arr = Array();
+        System.out.print("The greatest Number is:");
+        int great = arr[0];
+        for (int i = 1; i < arr.length; i++) {
+            if (great < arr[i]) {
+                great = arr[i];
+            }
+        }
+        System.out.print(great);
+    }
+
+    public void smallest() {
+        int[] arr = Array();
+        System.out.print("The smallest Number is:");
+        int small = arr[0];
+        for (int i = 1; i < arr.length; i++) {
+            if (small > arr[i]) {
+                small = arr[i];
+            }
+        }
+        System.out.print(small);
+    }
+
+}
+
+class ascen_descen extends acceptArray {
+
+    public void ascending() {
+        int[] arr = Array();
+        int large = 0;
+        System.out.println("The sorted array is :");
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = i + 1; j < arr.length; j++) {
+                if (arr[i] > arr[j]) {
+                    large = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = large;
+                }
+            }
+            System.out.println(arr[i]);
+        }
+    }
+
+    public void descending() {
+        int[] arr = Array();
+        int small = 0;
+        System.out.println("The sorted array is :");
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = i + 1; j < arr.length; j++) {
+                if (arr[i] < arr[j]) {
+                    small = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = small;
+                }
+            }
+            System.out.println(arr[i]);
+        }
+    }
+}
+
+public class Question4 extends ascen_descen {
+
+    public void average() {
+        int[] arr = Array();
+        int avg, sum = 0;
+        for (int i = 0; i < arr.length; i++) {
+            sum += arr[i];
+        }
+        System.out.print("The average of array is:");
+        avg = sum / arr.length;
+        System.out.print(avg);
+
+    }
+
+    public static void main(String[] args) {
+        great_small gs = new great_small();
+        Question4 q4 = new Question4();
+        int option;
+
+        System.out.println("Select option to perform :\n 1.Greatest \n 2. Smallest"
+                + "\n 3. Ascending Order"
+                + "\n 4. Descending Order"
+                + "\n 5. Average");
+        option = sc.nextInt();
+        char rep;
+        do{
+        switch (option) {
+            case 1:
+                gs.greatest();
+                break;
+            case 2:
+                gs.smallest();
+                break;
+            case 3:
+                q4.ascending();
+                break;
+            case 4:
+                q4.descending();
+                break;
+            case 5:
+                q4.average();
+                break;
+            default:
+                System.out.println("Select Proper option");
+
+        }
+            System.out.print("\n Want to run again:");
+            rep=sc.next().charAt(0);
+        }while(rep=='Y'||rep=='y');
+    }
+}
